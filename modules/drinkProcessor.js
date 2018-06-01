@@ -1,5 +1,5 @@
-var hx711 = require("HX711");
-const sensor = new hx711(5, 6);
+var HX711 = require("hx711");
+const sensor = new HX711(5, 6);
 
 module.exports.prepare = prepare;
 
