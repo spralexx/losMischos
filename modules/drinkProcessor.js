@@ -10,4 +10,5 @@ module.exports.prepare = prepare;
 function prepare(req) {
     console.log(req)
     console.log(sensor.getUnits());
+    console.log(sensor.getOffset());
 }
