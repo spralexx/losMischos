@@ -5,5 +5,5 @@ module.exports.prepare = prepare;
 
 function prepare(req) {
     console.log(req)
-    console.log(sensor.read());
+    console.log(sensor.getUnits());
 }
