@@ -1,7 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var drinkProcessor=require("./modules/drinkProcessor");
+var drinkProcessor = require("./modules/drinkProcessor");
 
 var port = 8080; //port to listen on
 var app = express();
@@ -22,6 +22,14 @@ var dbconn = mongoose.createConnection(mongoUri),
   Softs = dbconn.model('softies', softiesSchema, 'softies'),
   Alcs = dbconn.model('alc', alcSchema, 'alc');
 
+
+Softs.find({}, function (err, softs) {
+  Alcs.find({}, function (err, alcs) {
+    drinkProcessor.setupOutputs(softs, alcs);
+  })
+})
+
+
 app.set('view engine', 'pug');
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -41,8 +49,8 @@ app.get('/', function (req, res) {
 app.post("/drinkorder", function (req, res) {
   //  console.log(req.body)
   drinkProcessor.prepare(req.body);
-  var msg="Your drink is beeing prepared";
-  res.render("accepted",{msg});
+  var msg = "Your drink is beeing prepared";
+  res.render("accepted", { msg });
 
 
 
