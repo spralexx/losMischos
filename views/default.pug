@@ -1,0 +1,20 @@
+extends index.pug
+
+block body
+  div(class="container")
+    h4 Drink order
+    p(id="status")
+    form(id="drink",action="/drinkorder",method="post")
+      each i in softs
+        div(class="radio")
+          lable
+            input(type="radio", name="soft", value=i.id, id=i.id)
+            |#{i.name}
+      br
+      each i in alcs
+        div(class="radio")
+          lable 
+            input(type="radio", name="alc", value=i.id)
+            |#{i.name} 
+      input(id="ratio", type="text", data-slider-min="0", data-slider-max="100", data-slider-step="5", data-slider-value="20", data-slider-orientation="vertical")
+      input(type="submit", value="Order" class="btn btn-success")
