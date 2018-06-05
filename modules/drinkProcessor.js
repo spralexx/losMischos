@@ -23,6 +23,7 @@ function checkRatio(toCheck) {
             updateValue();
             console.log("???????")
             if (sensorValue > toCheck) {
+                clearInterval(this);
                 resolve();
             }
         }, 1500);
