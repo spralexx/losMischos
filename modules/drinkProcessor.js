@@ -36,25 +36,21 @@ async function prepare(req) {
     var alcAmount = 200 * (req.ratio / 100);
 
     gpio.write(getOutputFromId(req.alc), false);
-    
+
     await checkRatio(alcAmount);
 
     gpio.write(getOutputFromId(req.alc), true, function (err) {
         if (err) throw err;
     });
-/*
 
-    gpio.write(getOutputFromId(req.soft), false, async function (err) {
+    gpio.write(getOutputFromId(req.soft), false)
 
-        console.log("writing: " + getOutputFromId(req.soft));
+    await checkRatio(glasSize);
+
+    gpio.write(getOutputFromId(req.soft), true, function (err) {
         if (err) throw err;
-        await checkRatio(glasSize);
-        gpio.write(getOutputFromId(req.soft), true, function (err) {
-            if (err) throw err;
-        });
-
     });
-*/
+
 }
 
 function getOutputFromId(idToFind) {
@@ -91,11 +87,21 @@ function setupOutputs(soft, alc) {
     fluids.alcs = alc;
     for (var i in fluids.softs) {
         console.log("setting up: " + fluids.softs[i].output);
-        gpio.setup(fluids.softs[i].output, gpio.DIR_OUT);
+        gpio.setup(fluids.softs[i].output, gpio.DIR_OUT, function(err) {
+            if(err) throw err;
+            gpio.write(fluids.softs[i].output, true, function (err) {
+                if (err) throw err;
+            });
+        });
     }
     for (var i in fluids.alcs) {
         console.log("setting up: " + fluids.alcs[i].output);
-        gpio.setup(fluids.alcs[i].output, gpio.DIR_OUT);
+        gpio.setup(fluids.alcs[i].output, gpio.DIR_OUT, function (err) {
+            if (err) throw err;
+            gpio.write(fluids.alcs[i].output, true, function (err) {
+                if (err) throw err;
+            });
+        });
 
     }
 }
