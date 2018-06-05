@@ -9,7 +9,7 @@ const sensor = new HX711(5, 6);
 var scale = 450;
 sensor.tare();
 sensor.setScale(scale);
-var reader = setInterval(updateValue, 1500);
+//var reader = setInterval(updateValue, 1500);
 var glasSize = 200; //ml
 var fluids = {
     softs: [],
@@ -18,32 +18,40 @@ var fluids = {
 
 var sensorValue = 0;
 
+function sleep(ms) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms)
+    })
+}
 
-function prepare(req) {
+
+async function prepare(req) {
     sensorValue = 0;
     var alcAmount = 200 * (req.ratio / 100);
 
     gpio.write(getOutputFromId(req.alc), false, function (err) {
-        
+
         console.log("writing: " + getOutputFromId(req.alc));
         if (err) throw err;
-        while (sensorValue < alcAmount) { }
+        await sleep(100);
         gpio.write(getOutputFromId(req.alc), true, function (err) {
             if (err) throw err;
         });
-        
+
     });
 
 
     gpio.write(getOutputFromId(req.soft), false, function (err) {
-        
-       console.log("writing: " + getOutputFromId(req.soft));
+
+        console.log("writing: " + getOutputFromId(req.soft));
         if (err) throw err;
-        while (sensorValue < glasSize) { }
+        while (sensorValue < glasSize) {
+            await sleep(100);
+        }
         gpio.write(getOutputFromId(req.soft), true, function (err) {
             if (err) throw err;
         });
-        
+
     });
 
     while (sensorValue < glasSize) {
@@ -52,7 +60,7 @@ function prepare(req) {
 }
 
 function getOutputFromId(idToFind) {
-    console.log("searching for: "+idToFind)
+    console.log("searching for: " + idToFind)
     for (var i in fluids.softs) {
         if (fluids.softs[i].id == idToFind) {
             console.log("found: " + fluids.softs[i].output);
@@ -76,7 +84,7 @@ function updateValue() {
     } else {
         sensorValue = (sensorValue + newValue) / 2;
     }
-    console.log("sensorValue is: "+sensorValue);
+    console.log("sensorValue is: " + sensorValue);
 }
 
 
