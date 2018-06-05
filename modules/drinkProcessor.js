@@ -17,12 +17,15 @@ var fluids = {
 
 var sensorValue = 0;
 
-function checkRatio(toCheck) {
+function fillGlas(pin, toCheck) {
     return new Promise(resolve => {
+        sensorValue = 0;
+        gpio.setup(pin, DIR_LOW);
         setInterval(function () {
             updateValue();
             if (sensorValue > toCheck) {
                 clearInterval(this);
+                gpio.destroy();
                 resolve();
             }
         }, 1500);
@@ -31,30 +34,9 @@ function checkRatio(toCheck) {
 
 
 async function prepare(req) {
-    sensorValue = 0;
     var alcAmount = 200 * (req.ratio / 100);
-
-    //gpio.write(getOutputFromId(req.alc), false);
-    gpio.setup(getOutputFromId(req.alc), gpio.DIR_LOW);
-    await checkRatio(alcAmount);
-    /*
-        gpio.write(getOutputFromId(req.alc), true, function (err) {
-            if (err) throw err;
-        });
-    */
-    gpio.destroy();
-
-    sensorValue = 0;
-
-    //    gpio.write(getOutputFromId(req.soft), false)
-    gpio.setup(getOutputFromId(req.soft), gpio.DIR_LOW);
-    await checkRatio(glasSize);
-    /*
-    gpio.write(getOutputFromId(req.soft), true, function (err) {
-        if (err) throw err;
-    });
-    */
-    gpio.destroy();
+    await fillGlas(getOutputFromId(req.alc), alcAmount);
+    await fillGlas(getOutputFromId(req.soft),glasSize);
 }
 
 function getOutputFromId(idToFind) {
