@@ -30,7 +30,7 @@ function checkRatio(toCheck) {
 }
 
 
-function prepare(req) {
+async function prepare(req) {
     sensorValue = 0;
     var alcAmount = 200 * (req.ratio / 100);
 
