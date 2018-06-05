@@ -35,7 +35,7 @@ async function prepare(req) {
     var alcAmount = 200 * (req.ratio / 100);
 
     //gpio.write(getOutputFromId(req.alc), false);
-    gpio.setup(getOutputFromId(req.alc), gpio.DIR_HIGH)
+    gpio.setup(getOutputFromId(req.alc), gpio.DIR_LOW);
     await checkRatio(alcAmount);
     /*
         gpio.write(getOutputFromId(req.alc), true, function (err) {
@@ -47,7 +47,7 @@ async function prepare(req) {
     sensorValue = 0;
 
     //    gpio.write(getOutputFromId(req.soft), false)
-    gpio.setup(getOutputFromId(req.soft), gpio.DIR_HIGH)
+    gpio.setup(getOutputFromId(req.soft), gpio.DIR_LOW);
     await checkRatio(glasSize);
     /*
     gpio.write(getOutputFromId(req.soft), true, function (err) {
