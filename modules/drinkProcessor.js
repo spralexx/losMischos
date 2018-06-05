@@ -20,9 +20,10 @@ var sensorValue = 0;
 function fillGlas(pin, toCheck) {
     return new Promise(resolve => {
         sensorValue = 0;
+        console.log("settingup and filling on pin: "+pin);
         gpio.setup(pin, gpio.DIR_OUT, function (err) {
             if (err) throw err;
-            gpio.write(pin, true, function (err) {
+            gpio.write(pin, false, function (err) {
                 if (err) throw err;
             });
         });
