@@ -19,13 +19,13 @@ var sensorValue = 0;
 
 function checkRatio(toCheck) {
     return new Promise(resolve => {
-        setInterval(function () { 
+        setInterval(function () {
             updateValue();
             console.log("???????")
-            if(sensorValue > toCheck){
+            if (sensorValue > toCheck) {
                 resolve();
             }
-         }, 1500);
+        }, 1500);
     })
 }
 
@@ -34,17 +34,14 @@ function prepare(req) {
     sensorValue = 0;
     var alcAmount = 200 * (req.ratio / 100);
 
-    gpio.write(getOutputFromId(req.alc), false, async function (err) {
+    gpio.write(getOutputFromId(req.alc), false);
+    
+    await checkRatio(alcAmount);
 
-        console.log("writing: " + getOutputFromId(req.alc));
+    gpio.write(getOutputFromId(req.alc), true, function (err) {
         if (err) throw err;
-        await checkRatio(alcAmount);
-        gpio.write(getOutputFromId(req.alc), true, function (err) {
-            if (err) throw err;
-        });
-
     });
-
+/*
 
     gpio.write(getOutputFromId(req.soft), false, async function (err) {
 
@@ -56,10 +53,7 @@ function prepare(req) {
         });
 
     });
-
-    while (sensorValue < glasSize) {
-
-    }
+*/
 }
 
 function getOutputFromId(idToFind) {
