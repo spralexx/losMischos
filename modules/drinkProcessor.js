@@ -20,7 +20,12 @@ var sensorValue = 0;
 function fillGlas(pin, toCheck) {
     return new Promise(resolve => {
         sensorValue = 0;
-        gpio.setup(pin, gpio.DIR_LOW);
+        gpio.setup(pin, gpio.DIR_OUT, function (err) {
+            if (err) throw err;
+            gpio.write(fluids.softs[i].output, true, function (err) {
+                if (err) throw err;
+            });
+        });
         setInterval(function () {
             updateValue();
             if (sensorValue > toCheck) {
