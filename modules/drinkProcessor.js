@@ -23,21 +23,21 @@ function prepare(req) {
     sensorValue = 0;
     var alcAmount = 200 * (req.ratio / 100);
 
-    gpio.write(getOutputFromId(req.alc), true, function (err) {
+    gpio.write(getOutputFromId(req.alc), false, function (err) {
         console.log("writing: " + getOutputFromId(req.alc));
         if (err) throw err;
         while (sensorValue < alcAmount) { }
-        gpio.write(getOutputFromId(req.alc), false, function (err) {
+        gpio.write(getOutputFromId(req.alc), true, function (err) {
             if (err) throw err;
         });
     });
 
 
-    gpio.write(getOutputFromId(req.soft), true, function (err) {
+    gpio.write(getOutputFromId(req.soft), false, function (err) {
         console.log("writing: " + getOutputFromId(req.soft));
         if (err) throw err;
         while (sensorValue < glasSize) { }
-        gpio.write(getOutputFromId(req.soft), false, function (err) {
+        gpio.write(getOutputFromId(req.soft), true, function (err) {
             if (err) throw err;
         });
     });
@@ -72,6 +72,7 @@ function updateValue() {
     } else {
         sensorValue = (sensorValue + newValue) / 2;
     }
+    console.log("sensorValue is: "+sensorValue);
 }
 
 
