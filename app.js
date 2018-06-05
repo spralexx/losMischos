@@ -22,13 +22,12 @@ var dbconn = mongoose.createConnection(mongoUri),
   Softs = dbconn.model('softies', softiesSchema, 'softies'),
   Alcs = dbconn.model('alc', alcSchema, 'alc');
 
-/*
+
 Softs.find({}, function (err, softs) {
   Alcs.find({}, function (err, alcs) {
     drinkProcessor.setupOutputs(softs, alcs);
   })
 })
-*/
 
 app.set('view engine', 'pug');
 app.use(express.static('public'));

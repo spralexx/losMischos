@@ -1,5 +1,5 @@
 module.exports.prepare = prepare;
-//module.exports.setupOutputs = setupOutputs;
+module.exports.setupOutputs = setupOutputs;
 
 var HX711 = require("hx711");
 var gpio = require('rpi-gpio');
@@ -73,30 +73,30 @@ function updateValue() {
     }
     console.log("sensorValue is: " + sensorValue);
 }
-/*
+
 
 function setupOutputs(soft, alc) {
     fluids.softs = soft;
     fluids.alcs = alc;
-    for (var i in fluids.softs) {
-        console.log("setting up: " + fluids.softs[i].output);
-        gpio.setup(fluids.softs[i].output, gpio.DIR_OUT, function(err) {
-            if(err) throw err;
-            gpio.write(fluids.softs[i].output, true, function (err) {
-                if (err) throw err;
+    /*
+        for (var i in fluids.softs) {
+            console.log("setting up: " + fluids.softs[i].output);
+            gpio.setup(fluids.softs[i].output, gpio.DIR_OUT, function(err) {
+                if(err) throw err;
+                gpio.write(fluids.softs[i].output, true, function (err) {
+                    if (err) throw err;
+                });
             });
-        });
-    }
-    for (var i in fluids.alcs) {
-        console.log("setting up: " + fluids.alcs[i].output);
-        gpio.setup(fluids.alcs[i].output, gpio.DIR_OUT, function (err) {
-            if (err) throw err;
-            gpio.write(fluids.alcs[i].output, true, function (err) {
+        }
+        for (var i in fluids.alcs) {
+            console.log("setting up: " + fluids.alcs[i].output);
+            gpio.setup(fluids.alcs[i].output, gpio.DIR_OUT, function (err) {
                 if (err) throw err;
+                gpio.write(fluids.alcs[i].output, true, function (err) {
+                    if (err) throw err;
+                });
             });
-        });
-
-    }
+    
+        }
+        */
 }
-
-*/
