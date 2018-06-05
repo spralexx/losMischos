@@ -9,7 +9,7 @@ const sensor = new HX711(5, 6);
 var scale = 450;
 sensor.tare();
 sensor.setScale(scale);
-//var reader = setInterval(updateValue, 1500);
+var reader = setInterval(updateValue, 1500);
 var glasSize = 200; //ml
 var fluids = {
     softs: [],
