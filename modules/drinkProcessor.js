@@ -3,7 +3,6 @@ module.exports.setupOutputs = setupOutputs;
 
 var HX711 = require("hx711");
 var gpio = require('rpi-gpio');
-gpio.destroy();
 
 
 const sensor = new HX711(5, 6);
@@ -22,7 +21,6 @@ function checkRatio(toCheck) {
     return new Promise(resolve => {
         setInterval(function () {
             updateValue();
-            console.log("???????")
             if (sensorValue > toCheck) {
                 clearInterval(this);
                 resolve();
@@ -106,3 +104,7 @@ function setupOutputs(soft, alc) {
 
     }
 }
+
+process.on('SIGTERM', function () {
+    gpio.destroy();
+});
