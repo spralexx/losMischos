@@ -5,9 +5,6 @@ var HX711 = require("hx711");
 var gpio = require('rpi-gpio');
 gpio.setMode(gpio.MODE_BCM);
 
-gpio.setup(17, gpio.DIR_LOW);
-gpio.setup(0, gpio.DIR_HIGH);
-
 
 const sensor = new HX711(5, 6);
 var scale = 450;
@@ -28,26 +25,26 @@ function prepare(req) {
     var alcAmount = 200 * (req.ratio / 100);
 
     gpio.write(getOutputFromId(req.alc), false, function (err) {
-        /*
+        
         console.log("writing: " + getOutputFromId(req.alc));
         if (err) throw err;
         while (sensorValue < alcAmount) { }
         gpio.write(getOutputFromId(req.alc), true, function (err) {
             if (err) throw err;
         });
-        */
+        
     });
 
 
     gpio.write(getOutputFromId(req.soft), false, function (err) {
-        /*
+        
        console.log("writing: " + getOutputFromId(req.soft));
         if (err) throw err;
         while (sensorValue < glasSize) { }
         gpio.write(getOutputFromId(req.soft), true, function (err) {
             if (err) throw err;
         });
-        */
+        
     });
 
     while (sensorValue < glasSize) {
