@@ -85,11 +85,11 @@ function setupOutputs(soft, alc) {
     fluids.alcs = alc;
     for (var i in fluids.softs) {
         console.log("setting up: " + fluids.softs[i].output);
-        gpio.setup(fluids.softs[i].output, gpio.DIR_HIGH);
+        gpio.setup(fluids.softs[i].output, gpio.DIR_OUT);
     }
     for (var i in fluids.alcs) {
         console.log("setting up: " + fluids.alcs[i].output);
-        gpio.setup(fluids.alcs[i].output, gpio.DIR_HIGH);
+        gpio.setup(fluids.alcs[i].output, gpio.DIR_OUT);
 
     }
 }
