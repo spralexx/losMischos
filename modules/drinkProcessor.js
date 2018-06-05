@@ -3,8 +3,6 @@ module.exports.setupOutputs = setupOutputs;
 
 var HX711 = require("hx711");
 var gpio = require('rpi-gpio');
-//gpio.setMode(gpio.MODE_BCM);
-gpio.setup(11,gpio.DIR_LOW);
 
 
 const sensor = new HX711(5, 6);

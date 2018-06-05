@@ -1,0 +1,30 @@
+{
+    "softs": [
+        {
+            "name": "Cola",
+            "output": 11
+        },
+        {
+            "name": "Fanta",
+            "output": 12
+        },
+        {
+            "name": "Sprite",
+            "output": 13
+        }
+    ],
+    "alcs": [
+        {
+            "name": "Havana",
+            "output": 15
+        },
+        {
+            "name": "Vodka",
+            "output": 16
+        },
+        {
+            "name":"Captain Morgen",
+            "output":18
+        }
+    ]
+}
