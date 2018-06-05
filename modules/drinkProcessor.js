@@ -51,12 +51,14 @@ function getOutputFromId(idToFind) {
     console.log("searching for: "+idToFind)
     for (var i in fluids.softs) {
         if (fluids.softs[i].id == idToFind) {
+            console.log("found: " + fluids.softs[i].output);
             return fluids.softs[i].output;
         }
     }
 
     for (var i in fluids.alcs) {
         if (fluids.alcs[i].id == idToFind) {
+            console.log("found: " + fluids.alcs[i].output);
             return fluids.alcs[i].output;
         }
     }
