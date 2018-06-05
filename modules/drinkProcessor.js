@@ -20,7 +20,7 @@ var sensorValue = 0;
 function fillGlas(pin, toCheck) {
     return new Promise(resolve => {
         sensorValue = 0;
-        console.log("settingup and filling on pin: "+pin);
+        console.log("settingup and filling on pin: " + pin);
         gpio.setup(pin, gpio.DIR_OUT, function (err) {
             if (err) throw err;
             gpio.write(pin, false, function (err) {
@@ -41,8 +41,9 @@ function fillGlas(pin, toCheck) {
 
 async function prepare(req) {
     var alcAmount = 200 * (req.ratio / 100);
+    getOutputFromId(req.alc);
     await fillGlas(getOutputFromId(req.alc), alcAmount);
-    await fillGlas(getOutputFromId(req.soft),glasSize);
+    await fillGlas(getOutputFromId(req.soft), glasSize);
 }
 
 function getOutputFromId(idToFind) {
