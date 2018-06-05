@@ -48,6 +48,7 @@ function prepare(req) {
 }
 
 function getOutputFromId(idToFind) {
+    console.log("searching for: "+idToFind)
     for (var i in fluids.softs) {
         if (fluids.softs[i].id == idToFind) {
             return fluids.softs[i].output;
