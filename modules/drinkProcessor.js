@@ -25,11 +25,11 @@ function sleep(ms) {
 }
 
 
-async function prepare(req) {
+function prepare(req) {
     sensorValue = 0;
     var alcAmount = 200 * (req.ratio / 100);
 
-    gpio.write(getOutputFromId(req.alc), false, function (err) {
+    gpio.write(getOutputFromId(req.alc), false, async function (err) {
 
         console.log("writing: " + getOutputFromId(req.alc));
         if (err) throw err;
@@ -41,7 +41,7 @@ async function prepare(req) {
     });
 
 
-    gpio.write(getOutputFromId(req.soft), false, function (err) {
+    gpio.write(getOutputFromId(req.soft), false, async function (err) {
 
         console.log("writing: " + getOutputFromId(req.soft));
         if (err) throw err;
