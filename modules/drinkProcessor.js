@@ -9,7 +9,6 @@ const sensor = new HX711(5, 6);
 var scale = 450;
 sensor.tare();
 sensor.setScale(scale);
-var reader = setInterval(updateValue, 1500);
 var glasSize = 200; //ml
 var fluids = {
     softs: [],
@@ -18,9 +17,14 @@ var fluids = {
 
 var sensorValue = 0;
 
-function sleep(ms) {
+function checkRatio(toCheck) {
     return new Promise(resolve => {
-        setTimeout(resolve, ms)
+        setInterval(function () { 
+            updateValue();
+            if(sensorValue > toCheck){
+                resolve();
+            }
+         }, 1500);
     })
 }
 
@@ -33,7 +37,7 @@ function prepare(req) {
 
         console.log("writing: " + getOutputFromId(req.alc));
         if (err) throw err;
-        await sleep(100);
+        await checkRatio(alcAmount);
         gpio.write(getOutputFromId(req.alc), true, function (err) {
             if (err) throw err;
         });
@@ -45,9 +49,7 @@ function prepare(req) {
 
         console.log("writing: " + getOutputFromId(req.soft));
         if (err) throw err;
-        while (sensorValue < glasSize) {
-            await sleep(100);
-        }
+        await checkRatio(glasSize);
         gpio.write(getOutputFromId(req.soft), true, function (err) {
             if (err) throw err;
         });
