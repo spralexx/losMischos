@@ -21,6 +21,7 @@ function checkRatio(toCheck) {
     return new Promise(resolve => {
         setInterval(function () { 
             updateValue();
+            console.log("???????")
             if(sensorValue > toCheck){
                 resolve();
             }
