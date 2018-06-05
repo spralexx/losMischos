@@ -22,7 +22,7 @@ function fillGlas(pin, toCheck) {
         sensorValue = 0;
         gpio.setup(pin, gpio.DIR_OUT, function (err) {
             if (err) throw err;
-            gpio.write(fluids.softs[i].output, true, function (err) {
+            gpio.write(pin, true, function (err) {
                 if (err) throw err;
             });
         });
