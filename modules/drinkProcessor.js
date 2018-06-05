@@ -1,5 +1,5 @@
 module.exports.prepare = prepare;
-module.exports.setupOutputs = setupOutputs;
+//module.exports.setupOutputs = setupOutputs;
 
 var HX711 = require("hx711");
 var gpio = require('rpi-gpio');
@@ -34,22 +34,25 @@ async function prepare(req) {
     sensorValue = 0;
     var alcAmount = 200 * (req.ratio / 100);
 
-    gpio.write(getOutputFromId(req.alc), false);
-
+    //gpio.write(getOutputFromId(req.alc), false);
+    gpio.setup(getOutputFromId(req.alc), gpio.DIR_LOW)
     await checkRatio(alcAmount);
+    /*
+        gpio.write(getOutputFromId(req.alc), true, function (err) {
+            if (err) throw err;
+        });
+    */
+    gpio.destroy();
 
-    gpio.write(getOutputFromId(req.alc), true, function (err) {
-        if (err) throw err;
-    });
-
-    gpio.write(getOutputFromId(req.soft), false)
-
+    //    gpio.write(getOutputFromId(req.soft), false)
+    gpio.setup(getOutputFromId(req.soft), gpio.DIR_LOW)
     await checkRatio(glasSize);
-
+    /*
     gpio.write(getOutputFromId(req.soft), true, function (err) {
         if (err) throw err;
     });
-
+    */
+    gpio.destroy();
 }
 
 function getOutputFromId(idToFind) {
@@ -79,7 +82,7 @@ function updateValue() {
     }
     console.log("sensorValue is: " + sensorValue);
 }
-
+/*
 
 function setupOutputs(soft, alc) {
     fluids.softs = soft;
@@ -105,6 +108,4 @@ function setupOutputs(soft, alc) {
     }
 }
 
-process.on('SIGTERM', function () {
-    gpio.destroy();
-});
+*/
