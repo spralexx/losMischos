@@ -11,7 +11,7 @@ sensor.tare();
 sensor.setScale(scale);
 //setInterval(updateValue,1500);
 var glasSize = 150; //ml
-var alcCorrection=5;
+var alcCorrection=10;
 
 var fluids = {
     softs: [],
