@@ -11,6 +11,8 @@ sensor.tare();
 sensor.setScale(scale);
 //setInterval(updateValue,1500);
 var glasSize = 150; //ml
+var alcCorrection=5;
+
 var fluids = {
     softs: [],
     alcs: []
@@ -41,7 +43,7 @@ function fillGlas(pin, toCheck) {
 
 
 async function prepare(req) {
-    var alcAmount = glasSize * (req.ratio / 100);
+    var alcAmount = glasSize * ((req.ratio-alcCorrection) / 100);
     getOutputFromId(req.alc);
     await fillGlas(getOutputFromId(req.alc), alcAmount);
     await fillGlas(getOutputFromId(req.soft), glasSize);
