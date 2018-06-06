@@ -12,7 +12,7 @@ sensor.setScale(scale);
 //setInterval(updateValue,1500);
 var glasSize = 150; //ml
 var alcCorrection=10;
-var readSpeed=500;
+var readSpeed=250;
 
 var fluids = {
     softs: [],
@@ -33,7 +33,7 @@ function fillGlas(pin, toCheck) {
         });
         setInterval(function () {
             updateValue();
-            if (sensorValue > toCheck) {
+            if (sensorValue > toCheck || sensorValue >toCheck*0.8) {
                 clearInterval(this);
                 gpio.destroy();
                 resolve();
