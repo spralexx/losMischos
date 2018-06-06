@@ -10,8 +10,9 @@ var scale = 450;
 sensor.tare();
 sensor.setScale(scale);
 //setInterval(updateValue,1500);
-var glasSize = 150; //ml
+var glasSize = 125; //ml
 var alcCorrection=10;
+var readSpeed=500;
 
 var fluids = {
     softs: [],
@@ -37,7 +38,7 @@ function fillGlas(pin, toCheck) {
                 gpio.destroy();
                 resolve();
             }
-        }, 1500);
+        }, readSpeed);
     })
 }
 
